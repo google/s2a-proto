@@ -57,6 +57,7 @@ enum AlpnProtocol {
 }
 
 message Identity {
+  reserved 7;
   oneof identity_oneof {
     // The SPIFFE ID of a connection endpoint.
     string spiffe_id = 1;
