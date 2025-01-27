@@ -81,6 +81,7 @@ message Status {
 }
 
 message GetTlsConfigurationReq {
+  reserved 3, 4, 5, 6, 7, 8, 9;
   // The role of the application in the TLS connection.
   ConnectionSide connection_side = 1;
 
@@ -91,9 +92,9 @@ message GetTlsConfigurationReq {
 }
 
 message GetTlsConfigurationResp {
-  // Next ID: 8
+  // Next ID: 9
   message ClientTlsConfiguration {
-    reserved 4, 5;
+    reserved 4, 5, 8;
 
     // The certificate chain that the client MUST use for the TLS handshake.
     // It's a list of PEM-encoded certificates, ordered from leaf to root,
