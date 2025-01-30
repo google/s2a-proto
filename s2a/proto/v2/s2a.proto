@@ -16,8 +16,8 @@ syntax = "proto3";
 
 package s2a.proto.v2;
 
-import "s2a/proto/v2/common.proto";
-import "s2a/proto/v2/s2a_context.proto";
+import "common.proto";
+import "s2a_context.proto";
 
 option java_multiple_files = true;
 option java_outer_classname = "S2AProto";
