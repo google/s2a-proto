@@ -1,2 +1,5 @@
 # Maven
 target
+
+# Folder metadata file
+.DS_Store
