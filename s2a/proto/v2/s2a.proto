@@ -291,6 +291,23 @@ message ValidatePeerCertificateChainResp {
     FAILURE = 2;
   }
 
+  enum ValidationFailureReason {
+    UNKNOWN_ERROR = 0;
+    VALIDATION_FAILURE = 1;
+    VALIDATION_NOT_PERFORMED = 2;
+    CERT_CHAIN_LENGTH_LIMIT_EXCEEDED = 3;
+    UNSUPPORTED_KEY_ALGORITHM = 4;
+    INVALID_RSA_KEY_SIZE = 5;
+    UNSUPPORTED_ELLIPTIC_CURVE_KEY = 6;
+    PKI_TOO_LARGE = 7;
+    VALIDATION_TIMED_OUT = 8;
+    VALIDATION_SEARCH_LIMIT_EXCEEDED = 9;
+    CLIENT_CERT_CHAIN_PARSE_FAILURE = 10;
+    MAX_NAME_CONSTRAINTS_EXCEEDED = 11;
+    CLIENT_CERT_CHAIN_INVALID_EKU = 12;
+    CONFIGURATION_RESOLVER_RESOLUTION_FAILURE = 13;
+  }
+
   // The result of validating the peer certificate chain.
   ValidationResult validation_result = 1;
 
@@ -303,6 +320,10 @@ message ValidatePeerCertificateChainResp {
   // The S2A context MAY be populated even if validation of the peer certificate
   // chain fails.
   S2AContext context = 3;
+
+  // The validation error code. This field is only populated when the validation
+  // result is NOT SUCCESS.
+  ValidationFailureReason validation_failure_reason = 4;
 }
 
 message SessionReq {
