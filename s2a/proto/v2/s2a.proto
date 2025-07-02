@@ -399,7 +399,7 @@ message SessionResp {
 message GetWorkloadTrustBundlesRequest {}
 
 message GetWorkloadTrustBundlesResponse {
-  // The json formatted collection of Spiffe trust bundles object represented as
+  // The json formatted collection of SPIFFE trust bundles object represented as
   // a JWK Set and keyed by the trust domain name as described in
   // https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Trust_Domain_and_Bundle.md
   string spiffe_trust_bundles_map_json = 1;
@@ -429,13 +429,13 @@ service S2AService {
   // operations from the TLS handshake.
   rpc SetUpSession(stream SessionReq) returns (stream SessionResp) {}
 
-  // Returns the Spiffe trust bundles map containing trust domains and their
-  // corresponding cryptographis keys used for validating X.509-SVID(s).
+  // Returns the SPIFFE trust bundles map containing trust domains and their
+  // corresponding cryptographic keys used for validating X.509-SVID(s).
   rpc GetWorkloadTrustBundles(GetWorkloadTrustBundlesRequest)
       returns (GetWorkloadTrustBundlesResponse) {}
 
-  // Returns the certificate chain containing the X.509-SVID that the client
-  // must use for TLS handshake.
+  // Returns the certificate chain containing the X.509-SVID for the SPIFFE identity
+  // assigned to the workload that the client can use for TLS handshake.
   rpc GetWorkloadCertificates(GetWorkloadCertificatesRequest)
       returns (GetWorkloadCertificatesResponse) {}
 
