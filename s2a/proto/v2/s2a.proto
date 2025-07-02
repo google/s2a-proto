@@ -396,8 +396,51 @@ message SessionResp {
   }
 }
 
+message GetWorkloadTrustBundlesRequest {}
+
+message GetWorkloadTrustBundlesResponse {
+  // The json formatted collection of Spiffe trust bundles object represented as
+  // a JWK Set and keyed by the trust domain name as described in
+  // https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Trust_Domain_and_Bundle.md
+  string spiffe_trust_bundles_map_json = 1;
+}
+
+message GetWorkloadCertificatesRequest {}
+
+message GetWorkloadCertificatesResponse {
+  // A list of PEM-encoded certificates ordered from leaf to root,
+  // excluding the root.
+  //
+  // The leaf certificate is an SVID that contains a SPIFFE id in the URI SAN.
+  // Each subsequent certificate will be an intermediate certificate that signs
+  // the preceding certificate.
+  repeated string certificate_chain_pem = 1;
+}
+
+message GetWorkloadPrivateKeyRequest {}
+
+message GetWorkloadPrivateKeyResponse {
+  // The PEM-encoded private key.
+  string private_key_pem = 1;
+}
+
 service S2AService {
   // SetUpSession is a bidirectional stream used by applications to offload
   // operations from the TLS handshake.
   rpc SetUpSession(stream SessionReq) returns (stream SessionResp) {}
+
+  // Returns the Spiffe trust bundles map containing trust domains and their
+  // corresponding cryptographis keys used for validating X.509-SVID(s).
+  rpc GetWorkloadTrustBundles(GetWorkloadTrustBundlesRequest)
+      returns (GetWorkloadTrustBundlesResponse) {}
+
+  // Returns the certificate chain containing the X.509-SVID that the client
+  // must use for TLS handshake.
+  rpc GetWorkloadCertificates(GetWorkloadCertificatesRequest)
+      returns (GetWorkloadCertificatesResponse) {}
+
+  // Returns the private key corresponding to the leaf certificate in the
+  // certificate chain.
+  rpc GetWorkloadPrivateKey(GetWorkloadPrivateKeyRequest)
+      returns (GetWorkloadPrivateKeyResponse) {}
 }
